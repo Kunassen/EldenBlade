@@ -1,0 +1,42 @@
+{
+  "name": "eldenblade:rivers_of_blood",
+  "properties": {
+    "attack_base": 24.0,
+    "slash_art": "eldenblade:corpse_piler",
+    "special_effects": [
+      "eldenblade:blood_blessing"
+    ],
+    "sword_type": [
+      "bewitched"
+    ],
+    "max_damage": 779
+  },
+  "render": {
+    "carry_type": "default",
+    "model": "eldenblade:model/rivers_of_blood.obj",
+    "texture": "eldenblade:model/rivers_of_blood.png",
+    "summon_sword_color": 11734554
+  },
+  "enchantments": [
+    {
+      "id": "minecraft:sharpness",
+      "lvl": 10
+    },
+    {
+      "id": "minecraft:looting",
+      "lvl": 10
+    },
+    {
+      "id": "minecraft:power",
+      "lvl": 10
+    },
+    {
+      "id": "minecraft:fire_aspect",
+      "lvl": 10
+    },
+    {
+      "id": "minecraft:unbreaking",
+      "lvl": 10
+    }
+  ]
+}

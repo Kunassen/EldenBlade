@@ -1,0 +1,92 @@
+[
+  {
+    "Target": "run",
+    "Files": 63,
+    "Bytes": 15673224.0
+  },
+  {
+    "Target": "run-bosses",
+    "Files": 62,
+    "Bytes": 13712368.0
+  },
+  {
+    "Target": "run-forge47322",
+    "Files": 43,
+    "Bytes": 25728996.0
+  },
+  {
+    "Target": "run-legacy",
+    "Files": 26,
+    "Bytes": 19038846.0
+  },
+  {
+    "Target": "run-release-test",
+    "Files": 32,
+    "Bytes": 25011955.0
+  },
+  {
+    "Target": ".gradle",
+    "Files": 17,
+    "Bytes": 461655.0
+  },
+  {
+    "Target": ".gradle-user-home",
+    "Files": 4,
+    "Bytes": 167425.0
+  },
+  {
+    "Target": "docs/graymodel",
+    "Files": 11,
+    "Bytes": 5446912.0
+  },
+  {
+    "Target": "docs/graymodel_v2",
+    "Files": 9,
+    "Bytes": 5430552.0
+  },
+  {
+    "Target": "docs/material_v2",
+    "Files": 17,
+    "Bytes": 10104860.0
+  },
+  {
+    "Target": "docs/material_v3",
+    "Files": 16,
+    "Bytes": 9897616.0
+  },
+  {
+    "Target": "docs/inventory_v5",
+    "Files": 10,
+    "Bytes": 777683.0
+  },
+  {
+    "Target": "docs/inventory_v6",
+    "Files": 10,
+    "Bytes": 763237.0
+  },
+  {
+    "Target": "art/released_0_4_0",
+    "Files": 2,
+    "Bytes": 10091213.0
+  },
+  {
+    "Target": "art/runtime_candidate_v3",
+    "Files": 3,
+    "Bytes": 5510609.0
+  },
+  {
+    "Target": "art/runtime_candidate_v5",
+    "Files": 2,
+    "Bytes": 4721957.0
+  },
+  {
+    "Target": "art/runtime_candidate_v6",
+    "Files": 2,
+    "Bytes": 4719024.0
+  },
+  {
+    "Target": "tools/__pycache__",
+    "Files": 6,
+    "Bytes": 85016.0
+  }
+]

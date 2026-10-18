@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "world_groups_unchanged": true,
+  "world_atlas_pixels_unchanged": true,
+  "inventory_triangles": {
+    "item_blade": 66,
+    "item_damaged": 60,
+    "item_bladens": 44
+  },
+  "texture_size": [
+    2048,
+    2048
+  ],
+  "finite_nondegenerate_native_triangles": true,
+  "minecraft_client_tested": false
+}

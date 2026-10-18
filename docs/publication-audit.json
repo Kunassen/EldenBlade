@@ -1,0 +1,6 @@
+{
+  "files_scanned": 68,
+  "issues": [],
+  "scope": "Git index and uncompressed release JAR entries; targeted credential and private-path checks, plus publication exclusions.",
+  "preview_metadata_removed": true
+}

@@ -1,0 +1,28 @@
+{
+  "groups": {
+    "blade": 1166,
+    "blade_damaged": 898,
+    "sheath": 412,
+    "item_blade": 46,
+    "item_damaged": 41,
+    "item_bladens": 77,
+    "blade_fragment": 0,
+    "effect": 0,
+    "blade_luminous": 0,
+    "sheath_luminous": 0
+  },
+  "unique_positions": 1114,
+  "unique_uvs": 1940,
+  "unique_normals": 863,
+  "atlas": [
+    2048,
+    2048
+  ],
+  "texture_bindings": 1,
+  "materials": 1,
+  "inventory_method": "Offline orthographic color render, alpha-contour polygon per variant; B background included. Trimmed for native glint.",
+  "rgba8_base_mib": 16,
+  "rgba8_full_mipmap_estimate_mib": 21.333333333333332,
+  "custom_runtime_renderer": false,
+  "fps_measured": false
+}

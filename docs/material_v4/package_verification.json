@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "jar": "<PROJECT_ROOT>\\build\\libs\\EldenBlade-1.20.1-0.4.1-alpha.jar",
+  "bytes": 4522088,
+  "sha256": "e0d682c2511041b0192f500627a593c157936504d9b360347577a8df870cb43c",
+  "unchanged_gameplay_class_count": 11,
+  "changed_entries": [
+    "META-INF/mods.toml",
+    "assets/eldenblade/model/rivers_of_blood.obj",
+    "assets/eldenblade/model/rivers_of_blood.png"
+  ],
+  "added_entries": [],
+  "removed_entries": [],
+  "model_and_texture_match_verified_sources": true,
+  "minecraft_client_tested": false
+}

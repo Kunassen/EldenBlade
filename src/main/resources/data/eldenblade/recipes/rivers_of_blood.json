@@ -1,0 +1,56 @@
+{
+  "type": "eldenblade:blood_blade",
+  "blade": "eldenblade:rivers_of_blood",
+  "category": "equipment",
+  "pattern": [
+    "TNC",
+    "YEW",
+    "SDI"
+  ],
+  "key": {
+    "T": {
+      "item": "slashblade:proudsoul_trapezohedron"
+    },
+    "N": {
+      "item": "minecraft:nether_star"
+    },
+    "C": {
+      "item": "slashblade:proudsoul_crystal"
+    },
+    "E": {
+      "item": "minecraft:echo_shard"
+    },
+    "S": {
+      "item": "slashblade:proudsoul_sphere"
+    },
+    "D": {
+      "item": "minecraft:dragon_egg"
+    },
+    "I": {
+      "item": "slashblade:proudsoul_ingot"
+    },
+    "Y": {
+      "type": "slashblade:blade",
+      "item": "slashblade:slashblade",
+      "request": {
+        "name": "slashblade:yamato",
+        "kill": 200,
+        "refine": 10,
+        "proud_soul": 5000
+      }
+    },
+    "W": {
+      "type": "slashblade:blade",
+      "item": "slashblade:slashblade_wood",
+      "request": {
+        "kill": 20,
+        "refine": 5,
+        "proud_soul": 2000
+      }
+    }
+  },
+  "result": {
+    "item": "slashblade:slashblade"
+  },
+  "show_notification": true
+}

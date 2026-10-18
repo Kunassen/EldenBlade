@@ -1,0 +1,22 @@
+{
+  "old_blade_length": 332.0,
+  "new_blade_length": 415.0,
+  "length_ratio": 1.25,
+  "cross_section_scale": 1.2,
+  "atlas": [
+    2048,
+    2048
+  ],
+  "inventory_background_radius": 55.8,
+  "native_frame_inner_radius": 55.656,
+  "triangles": {
+    "blade": 2024,
+    "blade_damaged": 1484,
+    "sheath": 2840,
+    "item_blade": 4868,
+    "item_damaged": 4328,
+    "item_bladens": 2028,
+    "blade_fragment": 0,
+    "effect": 0
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "parts": {
+    "BLADE | shinogi and corrected cutting edge": 446,
+    "HANDLE | ray-skin core": 28,
+    "HANDLE | kashira end cap": 68,
+    "HANDLE | fuchi collar": 48,
+    "HANDLE | silk wrap -1": 160,
+    "HANDLE | silk wrap 1": 160,
+    "TSUBA | four-lobed plate": 128,
+    "TSUBA | rolled perimeter -27.72": 40,
+    "TSUBA | rolled perimeter -32.38": 40,
+    "BLADE | habaki collar": 48,
+    "SAYA | hollow fitted curved shell": 166,
+    "SAYA | open koiguchi fitting": 40,
+    "SAYA | tapered kojiri tip fitting": 14,
+    "SAGEO | wound sash": 56,
+    "SAGEO | folded upper loop": 28,
+    "SAGEO | compressed lower loop": 28,
+    "SAGEO | long hanging tail": 24,
+    "SAGEO | short hanging tail": 20,
+    "SAGEO | knot crossing A": 18,
+    "SAGEO | knot crossing B": 18
+  },
+  "groups": {
+    "blade": 1166,
+    "sheath": 412
+  },
+  "after_total": 1578,
+  "reference_base": {
+    "blade": 1175,
+    "sheath": 413
+  },
+  "prior_v3_total": 4940
+}

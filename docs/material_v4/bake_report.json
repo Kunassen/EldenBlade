@@ -1,0 +1,20 @@
+{
+  "atlas": [
+    2048,
+    2048
+  ],
+  "weapon_material_count": 1,
+  "texture_count_bound_to_weapon": 1,
+  "baked_color_only": true,
+  "procedural_shader_in_runtime_candidate": false,
+  "inventory_B_retained_in_atlas": true,
+  "inventory_only_triangles": 4,
+  "rgb8_base_texture_mib": 12.0,
+  "rgba8_upload_estimate_mib": 16.0,
+  "held_obj_triangles": 1578,
+  "limitations": [
+    "VRAM figures are uncompressed base-level estimates, not measured driver allocations.",
+    "Held-only review OBJ lacks final damaged and inventory groups. Not a release JAR.",
+    "No FPS or Minecraft client benchmark was performed."
+  ]
+}

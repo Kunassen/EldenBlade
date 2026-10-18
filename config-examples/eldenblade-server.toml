@@ -1,0 +1,14 @@
+# 尸山血海平衡配置。百分比填写 10 表示 10%，不是 0.1。
+# 单机：saves/<存档>/serverconfig/eldenblade-server.toml
+# 服务器：<世界目录>/serverconfig/eldenblade-server.toml
+[balance]
+    # 默认基础面板攻击力；范围 0～1000000。
+    baseAttack = 24.0
+    # SA 每一段额外扣除的最大生命百分比；两段合计为此值的两倍；范围 0～100。
+    saMaxHealthPercent = 10.0
+    # SE 每次有效命中的触发概率；范围 0～100，0 为关闭。
+    seChancePercent = 10.0
+    # SE 每次触发额外扣除的最大生命百分比；范围 0～100。
+    seMaxHealthPercent = 10.0
+    # SE 玩家全局内置冷却，单位 tick；范围 0～12000；2 tick 正常为 0.1 秒，0 为无冷却。
+    seCooldownTicks = 2

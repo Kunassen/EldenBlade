@@ -1,0 +1,19 @@
+{
+  "blade": {
+    "old_length": 415.0,
+    "new_length": 363.125,
+    "ratio": 0.875,
+    "verified_positive_y_bevel_triangles": 256
+  },
+  "blade_damaged": {
+    "old_length": 195.27344,
+    "new_length": 170.86426,
+    "ratio": 0.875,
+    "verified_positive_y_bevel_triangles": 76
+  },
+  "sheath": {
+    "old_length": 327.5875,
+    "new_length": 286.63906,
+    "ratio": 0.8749999923684512
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "status": "passed",
+  "held_geometry_triangles": 1578,
+  "blade_only_triangles": 446,
+  "length_author_units": 363.12499940395355,
+  "chip_count": 6,
+  "tip_preserved": true,
+  "spine_preserved": true,
+  "uv_degenerate_triangles": 0,
+  "game_uv_in_bounds": true,
+  "weapon_materials": 1,
+  "bound_color_textures": 1,
+  "texture_size": [
+    2048,
+    2048
+  ],
+  "procedural_shading_required": false,
+  "fps_benchmarked": false,
+  "remaining": "Minecraft client visual acceptance and like-for-like frame-time benchmark.",
+  "native": {
+    "groups": {
+      "blade": 1166,
+      "blade_damaged": 898,
+      "sheath": 412,
+      "item_blade": 46,
+      "item_damaged": 41,
+      "item_bladens": 77,
+      "blade_fragment": 0,
+      "effect": 0,
+      "blade_luminous": 0,
+      "sheath_luminous": 0
+    },
+    "streams": [
+      1114,
+      1940,
+      863
+    ],
+    "bytes": 220689
+  },
+  "reference": {
+    "groups": {
+      "item_blade": 117,
+      "item_damaged": 110,
+      "item_bladens": 92,
+      "sheath": 413,
+      "effect": 381,
+      "handle": 1032,
+      "blade": 1175,
+      "blade_damaged": 1062,
+      "blade_fragment": 98,
+      "item_back": 20,
+      "blade_luminous": 77,
+      "sheath_luminous": 8
+    },
+    "streams": [
+      4846,
+      1076,
+      3175
+    ],
+    "bytes": 458001
+  },
+  "texture": {
+    "width": 2048,
+    "height": 2048,
+    "depth": 8,
+    "color_type": 6,
+    "bytes": 4443448
+  },
+  "reference_texture": {
+    "width": 2048,
+    "height": 2048,
+    "depth": 8,
+    "color_type": 6,
+    "bytes": 5942055
+  },
+  "per_group_budgets_passed": true,
+  "reference_render_override_class_mentions": [],
+  "v3_to_v4_triangle_reduction_percent": 68.05668016194333,
+  "reference_to_v4_base_reduction_percent": 0.6297229219143552,
+  "sha256": {
+    "rivers_of_blood_v4.png": "48b504a46a9e899a949d47b2b2c919af4a9868b491b636a18875894143f30cb0",
+    "rivers_of_blood.obj": "e51a4c05cba29af302f88779f3ecd727dfa6ac684c46ccf2a3220bbb219e4de4"
+  }
+}

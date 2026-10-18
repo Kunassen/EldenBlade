@@ -1,0 +1,27 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="All Rights Reserved"
+[[mods]]
+modId="eldenblade"
+version="1.0.0"
+displayName="EldenBlade: Rivers of Blood"
+authors="Kunassen"
+description="Rivers of Blood addon for SlashBlade: Resharped."
+[[dependencies.eldenblade]]
+modId="forge"
+mandatory=true
+versionRange="[47.3.22,48)"
+ordering="NONE"
+side="BOTH"
+[[dependencies.eldenblade]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20.1,1.20.2)"
+ordering="NONE"
+side="BOTH"
+[[dependencies.eldenblade]]
+modId="slashblade"
+mandatory=true
+versionRange="[1.1.23,1.9)"
+ordering="AFTER"
+side="BOTH"
