@@ -9,16 +9,21 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-/** Client-only lore: ordinary tooltips and other blades are unaffected. */
+/** Blood-red name and Shift lore, restricted to this blade. */
 @Mod.EventBusSubscriber(modid = EldenBlade.ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class BladeTooltip {
-    private static final int BLOOD_RED = 0xFF2020;
+    private static final int BLOOD_RED = BladeBalance.BLOOD_RED;
 
     private BladeTooltip() {}
 
     @SubscribeEvent
     public static void onTooltip(ItemTooltipEvent event) {
-        if (!Screen.hasShiftDown() || !BladeBalance.isBloodBlade(event.getItemStack())) return;
+        if (!BladeBalance.isBloodBlade(event.getItemStack())) return;
+        if (!event.getToolTip().isEmpty()) {
+            event.getToolTip().set(0, event.getToolTip().get(0).copy()
+                .withStyle(style -> style.withColor(BLOOD_RED)));
+        }
+        if (!Screen.hasShiftDown()) return;
         event.getToolTip().add(Component.empty());
         for (int line = 1; line <= 6; line++) {
             if (line == 3) event.getToolTip().add(Component.empty());

@@ -31,6 +31,20 @@ public final class BladeCommands {
                 return 1;
             })
             .then(config)
+            .then(Commands.literal("health").then(Commands.argument("target", net.minecraft.commands.arguments.EntityArgument.entity())
+                .executes(c -> {
+                    var entity = net.minecraft.commands.arguments.EntityArgument.getEntity(c, "target");
+                    if (!(entity instanceof net.minecraft.world.entity.LivingEntity living)) {
+                        c.getSource().sendFailure(Component.literal("目标不是生物。")); return 0;
+                    }
+                    var snapshot = HealthStorage.inspect(living);
+                    String storage = snapshot.supported() ? "已识别同步血量，字段编号 " + snapshot.key().getId()
+                        : "暂不支持或读取来源不明确，不会猜测字段";
+                    c.getSource().sendSuccess(() -> Component.literal(String.format(java.util.Locale.ROOT,
+                        "%s：服务端生命 %.3f / %.3f；%s。此指令只读取，不扣血。",
+                        living.getName().getString(), snapshot.health(), living.getMaxHealth(), storage)), false);
+                    return snapshot.supported() ? 1 : 0;
+                })))
             .then(Commands.literal("attack")
                 .then(Commands.argument("value", DoubleArgumentType.doubleArg(0, 1000000)).executes(c ->
                     heldAttack(c.getSource(), DoubleArgumentType.getDouble(c, "value"))))

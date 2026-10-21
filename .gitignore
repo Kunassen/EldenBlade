@@ -20,6 +20,9 @@ art/
 tools/*
 !tools/build.ps1
 !tools/verify_release.py
+!tools/prepare_sa_audio.py
+!tools/prepare_sa_motion.py
+!tools/prepare_health_test_mods.py
 docs/research/
 docs/graymodel*/
 docs/material_v2/

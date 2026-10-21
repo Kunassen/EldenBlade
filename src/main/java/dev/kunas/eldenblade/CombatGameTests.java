@@ -111,16 +111,30 @@ public final class CombatGameTests {
         target.setHealth(1000);
         player.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(24);
         BloodCombat.start(player);
-        helper.assertTrue(Math.abs(target.getHealth()-864)<.01, "First segment must deal 36 + 100");
-        helper.runAfterDelay(5, () -> {
-            helper.assertTrue(Math.abs(target.getHealth()-728)<.01, "Two segments must deal 72 + 200");
-            var slashes=level.getEntitiesOfClass(mods.flammpfeil.slashblade.entity.EntitySlashEffect.class,
+        helper.assertTrue(Math.abs(target.getHealth()-840)<.01, "First segment must deal 60 + 100");
+        helper.runAfterDelay(3, () -> {
+            helper.assertTrue(Math.abs(target.getHealth()-840)<.01, "Second segment must wait five ticks");
+        });
+        helper.runAfterDelay(7, () -> {
+            helper.assertTrue(Math.abs(target.getHealth()-680)<.01, "Two segments must deal 120 + 200");
+            var slashes=level.getEntitiesOfClass(BloodSlashEntity.class,
                 player.getBoundingBox().inflate(9));
             helper.assertTrue(slashes.size()==2, "Exactly two visible slashes must be spawned");
-            helper.assertTrue(slashes.stream().allMatch(s -> s.getShooter()==null && s.getColor()==0xE01832),
-                "Red slashes must be visual-only without a damage owner");
-            helper.assertTrue(slashes.stream().anyMatch(s -> s.getRotationRoll()==45f)
-                && slashes.stream().anyMatch(s -> s.getRotationRoll()==-45f), "Slashes must cross");
+            helper.assertTrue(slashes.stream().noneMatch(s -> s.isPickable() || s.isPushable() || s.isAttackable()),
+                "Visuals must not interact with combat");
+            helper.assertTrue(slashes.stream().anyMatch(BloodSlashEntity::isSecond)
+                && slashes.stream().anyMatch(s -> !s.isSecond()), "Both crossing directions must be synced");
+            helper.assertTrue(slashes.stream().allMatch(s ->
+                Math.abs(s.getX() - player.getX()) < .001
+                    && Math.abs(s.getZ() - player.getZ() - BloodCombat.SLASH_FORWARD_OFFSET) < .001),
+                "Swept fan must start 0.8 blocks ahead of the wielder");
+            helper.assertTrue(level.getEntitiesOfClass(mods.flammpfeil.slashblade.entity.EntitySlashEffect.class,
+                player.getBoundingBox().inflate(9)).isEmpty(), "Old native slashes must not be spawned");
+        });
+        helper.runAfterDelay(20, () -> {
+            helper.assertTrue(level.getEntitiesOfClass(BloodSlashEntity.class, player.getBoundingBox().inflate(9)).isEmpty(),
+                "Both visual entities must expire");
+            helper.assertTrue(Math.abs(target.getHealth()-680)<.01, "Visuals must not inflict extra damage");
             target.discard(); helper.succeed();
         });
     }
@@ -263,11 +277,37 @@ public final class CombatGameTests {
         double before=BladeConfig.saPercent();
         try { BladeConfig.setDouble(BladeConfig.SA_PERCENT, 2.5);BloodCombat.start(player); }
         finally { BladeConfig.setDouble(BladeConfig.SA_PERCENT, before); }
-        helper.assertTrue(target.getHealth()==939,"Configured first SA segment: 36 + 25");
-        helper.runAfterDelay(5,()->{
-            helper.assertTrue(target.getHealth()==878,"Second SA segment retains cast-time percentage despite config change");
+        helper.assertTrue(target.getHealth()==915,"Configured first SA segment: 60 + 25");
+        helper.runAfterDelay(7,()->{
+            helper.assertTrue(target.getHealth()==830,"Second SA segment retains cast-time percentage despite config change");
             target.discard();helper.succeed();
         });
+    }
+    @GameTest(template="empty")
+    public static void sweptFanGeometry(GameTestHelper helper) {
+        helper.assertTrue(BloodSlashShape.reveal(0) == 0 && BloodSlashShape.reveal(4) == 1,
+            "Sweep must unfold instead of appearing fully formed");
+        for (boolean second : new boolean[] {false, true}) {
+            double minDepth = Double.POSITIVE_INFINITY, maxDepth = 0;
+            for (int i = 0; i <= BloodSlashShape.SEGMENTS; i++) {
+                float angle = BloodSlashShape.angle((float)i / BloodSlashShape.SEGMENTS, second);
+                double depth = Math.cos(angle) * BloodSlashShape.radius(0, 4);
+                helper.assertTrue(depth > 0, "Entire fan must remain forward of its pivot");
+                minDepth = Math.min(minDepth, depth);
+                maxDepth = Math.max(maxDepth, depth);
+            }
+            helper.assertTrue(maxDepth - minDepth > 3, "Fan needs real forward depth for side views");
+        }
+        helper.assertTrue(BloodSlashShape.roll(false) * BloodSlashShape.roll(true) < 0,
+            "The two cutting planes must bank in opposite directions");
+        helper.assertTrue(BloodSlashShape.opacity(.5f, 1, 4) == 0,
+            "Inner edge must fade completely into air");
+        helper.assertTrue(BloodSlashShape.opacity(.1f, .2f, 8) < BloodSlashShape.opacity(.9f, .2f, 8),
+            "Older trail must fade before the newer end");
+        int triangles = 2 * (BloodSlashShape.SEGMENTS * BloodSlashShape.RADIAL_BANDS * 2
+            + BloodSlashShape.FLECKS * 2);
+        helper.assertTrue(triangles <= 416, "Both full sweeps must stay within the geometry budget");
+        helper.succeed();
     }
     @GameTest(template="empty")
     public static void orientedVolume(GameTestHelper helper) {

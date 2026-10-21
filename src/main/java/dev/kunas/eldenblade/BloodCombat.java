@@ -3,10 +3,8 @@ package dev.kunas.eldenblade;
 import java.util.*;
 import mods.flammpfeil.slashblade.event.SlashBladeEvent;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -15,9 +13,11 @@ import net.minecraftforge.entity.PartEntity;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.server.ServerStoppedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import org.joml.Vector3f;
 
 public final class BloodCombat {
+    public static final int SECOND_STRIKE_DELAY = 5;
+    public static final double SA_ATTACK_MULTIPLIER = 2.5;
+    public static final double SLASH_FORWARD_OFFSET = .8;
     private record Cast(ServerPlayer player, ServerLevel level, Vec3 origin, Vec3 forward,
                         long secondTick, double attack, double saPercent, Map<UUID, Float> health) {}
     private static final List<Cast> PENDING = new ArrayList<>();
@@ -30,7 +30,7 @@ public final class BloodCombat {
         if (!(entity instanceof ServerPlayer player) || !ACTIVE.add(player.getUUID())) return;
         Vec3 forward = Vec3.directionFromRotation(0, player.getYRot());
         Cast cast = new Cast(player, player.serverLevel(), player.position().add(0, 1, 0), forward,
-            player.serverLevel().getGameTime() + 3, player.getAttributeValue(Attributes.ATTACK_DAMAGE), BladeConfig.saPercent(), new HashMap<>());
+            player.serverLevel().getGameTime() + SECOND_STRIKE_DELAY, player.getAttributeValue(Attributes.ATTACK_DAMAGE), BladeConfig.saPercent(), new HashMap<>());
         PENDING.add(cast);
         strike(cast, false);
     }
@@ -67,32 +67,22 @@ public final class BloodCombat {
                 // Clear vanilla hurt immunity only around this hit, so both SA segments can land.
                 int immunity = target.invulnerableTime;
                 target.invulnerableTime = 0;
-                try { target.hurt(cast.level.damageSources().playerAttack(cast.player), (float)(cast.attack * 1.5)); }
+                try { target.hurt(cast.level.damageSources().playerAttack(cast.player), (float)(cast.attack * SA_ATTACK_MULTIPLIER)); }
                 finally { target.invulnerableTime = immunity; }
                 BloodDamage.apply(cast.player, target, (float)(max * cast.saPercent / 100.0));
                 proc(cast.player, target);
             }
         } finally { resolving = false; }
-        // No shooter: native SlashBlade skips its damage path entirely (1.1.23 and 1.8.62).
-        var slash = new mods.flammpfeil.slashblade.entity.EntitySlashEffect(
-            mods.flammpfeil.slashblade.SlashBlade.RegistryEvents.SlashEffect, cast.level);
-        slash.moveTo(center.x, center.y, center.z, (float)Math.toDegrees(Math.atan2(-cast.forward.x, cast.forward.z)), 0);
-        slash.setColor(0xE01832);
-        slash.setRotationRoll(second ? -45f : 45f);
-        slash.setBaseSize(2.3f);
-        slash.setDamage(0);
-        slash.setIsCritical(false);
-        slash.setLifetime(10);
-        slash.setSilent(true);
+        var slash = new BloodSlashEntity(EldenBlade.BLOOD_SLASH.get(), cast.level);
+        // Shift visuals forward without moving the established damage volume.
+        Vec3 visualOrigin = cast.origin.add(cast.forward.scale(SLASH_FORWARD_OFFSET));
+        slash.moveTo(visualOrigin.x, visualOrigin.y + .25, visualOrigin.z,
+            (float)Math.toDegrees(Math.atan2(-cast.forward.x, cast.forward.z)), 0);
+        slash.start(second);
         cast.level.addFreshEntity(slash);
-        for (int i = 0; i < 64; i++) {
-            double t = i / 63.0 * 2 - 1;
-            Vec3 point = center.add(right.scale(t * 3.5)).add(0, (second ? -t : t) * 3.2, 0);
-            cast.level.sendParticles(new DustParticleOptions(new Vector3f(0.85f, 0.025f, 0.055f), 1.4f),
-                point.x, point.y, point.z, 2, 0.04, 0.04, 0.04, 0);
-        }
-        cast.level.playSound(null, center.x, center.y, center.z, SoundEvents.PLAYER_ATTACK_SWEEP,
-            SoundSource.PLAYERS, 1.0f, second ? 0.7f : 0.9f);
+        cast.level.playSound(null, center.x, center.y, center.z,
+            (second ? EldenBlade.BLOOD_SLASH_SECOND : EldenBlade.BLOOD_SLASH_FIRST).get(),
+            SoundSource.PLAYERS, 1.0f, 1.0f);
     }
 
     static boolean intersects(AABB box, Vec3 center, Vec3 forward, Vec3 right) {

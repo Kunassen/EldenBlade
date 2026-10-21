@@ -7,6 +7,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public final class BladeBalance {
+    public static final int BLOOD_RED = 0xFF2020;
     public static final String OVERRIDE = "EldenBladeAttackOverride";
     public static boolean isBloodBlade(ItemStack stack) {
         return stack.getCapability(ItemSlashBlade.BLADESTATE)
@@ -14,6 +15,10 @@ public final class BladeBalance {
     }
     public static boolean apply(ItemStack stack) {
         if (!isBloodBlade(stack)) return false;
+        var name = stack.getHoverName();
+        var color = name.getStyle().getColor();
+        boolean changed = color == null || color.getValue() != BLOOD_RED;
+        if (changed) stack.setHoverName(name.copy().withStyle(style -> style.withColor(BLOOD_RED)));
         double attack = BladeConfig.attack();
         var tag = stack.getTag();
         if (tag != null && tag.contains(OVERRIDE, Tag.TAG_ANY_NUMERIC)) {
@@ -22,7 +27,7 @@ public final class BladeBalance {
         }
         final float desired = (float)attack;
         var state = stack.getCapability(ItemSlashBlade.BLADESTATE).orElseThrow(IllegalStateException::new);
-        if (state.getBaseAttackModifier() == desired) return false;
+        if (state.getBaseAttackModifier() == desired) return changed;
         state.setBaseAttackModifier(desired);
         return true;
     }

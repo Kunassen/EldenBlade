@@ -1,0 +1,10 @@
+{
+  "corpse_piler_first": {
+    "subtitle": "subtitles.eldenblade.corpse_piler",
+    "sounds": [{"name": "eldenblade:corpse_piler_first", "stream": false, "attenuation_distance": 20}]
+  },
+  "corpse_piler_second": {
+    "subtitle": "subtitles.eldenblade.corpse_piler",
+    "sounds": [{"name": "eldenblade:corpse_piler_second", "stream": false, "attenuation_distance": 20}]
+  }
+}

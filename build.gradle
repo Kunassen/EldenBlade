@@ -2,7 +2,7 @@ plugins {
     id 'net.minecraftforge.gradle' version '6.0.54'
 }
 group = 'dev.kunas.eldenblade'
-version = '1.0.0'
+version = '1.2.0'
 base { archivesName = 'EldenBlade-1.20.1' }
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 minecraft {
@@ -10,13 +10,19 @@ minecraft {
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     runs {
         configureEach {
+            args '--mixin', 'eldenblade.mixins.json'
             workingDirectory project.file(findProperty('runDir') ?: 'run')
             property 'forge.logging.console.level', 'info'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', file('build/createSrgToMcp/output.srg').absolutePath
             mods { eldenblade { source sourceSets.main } }
         }
-        client {}
+        client {
+            if (project.hasProperty('visualDemo')) {
+                property 'eldenblade.visualDemo', 'true'
+                args '--quickPlaySingleplayer', 'sa-preview', '--width', '1280', '--height', '720'
+            }
+        }
         gameTestServer { property "forge.enabledGameTestNamespaces", "eldenblade" }
         server { args '--nogui' }
     }
@@ -25,6 +31,12 @@ repositories { flatDir { dirs 'libs' } }
 dependencies {
     minecraft "net.minecraftforge:forge:1.20.1-${findProperty('forgeVersion') ?: '47.3.22'}"
     implementation fg.deobf("local:SlashBladeResharped-1.20.1:${findProperty('slashbladeVersion') ?: '1.1.23'}")
+    if (project.hasProperty('healthBossTests')) {
+        def pack = project.property('healthBossTests')
+        fileTree('libs').matching { include "health-${pack}-*-local.jar" }.files.each {
+            runtimeOnly fg.deobf("local:${it.name.replace('-local.jar', '')}:local")
+        }
+    }
     if (project.hasProperty('bossTests')) {
         ['cataclysm', 'lionfishapi', 'mowziesmobs', 'geckolib', 'curios', 'goety', 'revelation'].each {
             runtimeOnly fg.deobf("local:${it}:local")
@@ -33,7 +45,10 @@ dependencies {
 }
 tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
 tasks.named('jar', Jar).configure {
+    manifest { attributes 'MixinConfigs': 'eldenblade.mixins.json' }
     exclude 'dev/kunas/eldenblade/CombatGameTests*'
+    exclude 'dev/kunas/eldenblade/HealthStorageGameTests*'
+    exclude 'dev/kunas/eldenblade/client/SaVisualCheck*'
     exclude 'data/eldenblade/structures/empty.nbt'
     finalizedBy 'reobfJar'
 }

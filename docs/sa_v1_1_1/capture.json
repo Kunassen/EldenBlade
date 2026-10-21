@@ -1,0 +1,31 @@
+{
+  "duration": 9.992690000000009,
+  "sampled_frames": 567,
+  "selected": {
+    "rear": {
+      "frame": 40,
+      "time": 0.7322529999999999
+    },
+    "side-first": {
+      "frame": 151,
+      "time": 2.729283
+    },
+    "side-second": {
+      "frame": 165,
+      "time": 2.9907980000000003
+    },
+    "front": {
+      "frame": 263,
+      "time": 4.726779000000001
+    },
+    "top": {
+      "frame": 377,
+      "time": 6.725076000000004
+    },
+    "first-person": {
+      "frame": 492,
+      "time": 8.726872000000009
+    }
+  },
+  "audio": "Release sound assets mixed in for preview; not loopback capture"
+}
