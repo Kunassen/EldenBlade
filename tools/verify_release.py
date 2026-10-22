@@ -4,7 +4,7 @@ import argparse, hashlib, json, zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser()
-parser.add_argument('jar', nargs='?', default='releases/EldenBlade-1.20.1-1.2.0.jar')
+parser.add_argument('jar', nargs='?', default='releases/EldenBlade-1.20.1-1.2.1.jar')
 args = parser.parse_args()
 jar = ROOT / args.jar
 lore = ['芦苇之地的大剑客“老翁”的武器。', '斩人无数的诅咒刀。',
@@ -21,7 +21,8 @@ with zipfile.ZipFile(jar) as z:
     assert b'revelationfix' not in resolver and b'Apollyon' not in resolver
     assert 'dev/kunas/eldenblade/client/BladeTooltip.class' in names
     assert not any('CombatGameTests' in n or 'HealthStorageGameTests' in n or 'SaVisualCheck' in n or n.endswith('.blend') or 'prinegorerouse' in n for n in names)
-    assert 'version="1.2.0"' in z.read('META-INF/mods.toml').decode()
+    assert 'version="1.2.1"' in z.read('META-INF/mods.toml').decode()
+    assert 'versionRange="[1.1.23,1.9.65]"' in z.read('META-INF/mods.toml').decode()
     assert 'dev/kunas/eldenblade/client/BloodSlashRenderer.class' in names
     assert 'dev/kunas/eldenblade/BloodSlashEntity.class' in names
     assert 'dev/kunas/eldenblade/BloodSlashShape.class' in names
@@ -54,4 +55,4 @@ digest = hashlib.sha256(jar.read_bytes()).hexdigest()
 jar.with_suffix('.jar.sha256').write_text(digest + '  ' + jar.name + '\n', encoding='ascii')
 print(json.dumps({'status': 'passed', 'jar': jar.name, 'bytes': jar.stat().st_size,
                   'sha256': digest, 'lore_lines': 6, 'mono_sounds': 2,
-                  'visual_check': 'See docs/RELEASE_1.2.0.md; not performed by this script'}, indent=2))
+                  'visual_check': 'See docs/RELEASE_1.2.1.md; not performed by this script'}, indent=2))

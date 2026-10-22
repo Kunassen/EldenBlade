@@ -3,7 +3,7 @@ loaderVersion="[47,)"
 license="All Rights Reserved"
 [[mods]]
 modId="eldenblade"
-version="1.2.0"
+version="1.2.1"
 displayName="EldenBlade: Rivers of Blood"
 authors="Kunassen"
 description="Rivers of Blood addon for SlashBlade: Resharped."
@@ -22,6 +22,6 @@ side="BOTH"
 [[dependencies.eldenblade]]
 modId="slashblade"
 mandatory=true
-versionRange="[1.1.23,1.9)"
+versionRange="[1.1.23,1.9.65]"
 ordering="AFTER"
 side="BOTH"

@@ -2,7 +2,7 @@ plugins {
     id 'net.minecraftforge.gradle' version '6.0.54'
 }
 group = 'dev.kunas.eldenblade'
-version = '1.2.0'
+version = '1.2.1'
 base { archivesName = 'EldenBlade-1.20.1' }
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 minecraft {
@@ -30,7 +30,15 @@ minecraft {
 repositories { flatDir { dirs 'libs' } }
 dependencies {
     minecraft "net.minecraftforge:forge:1.20.1-${findProperty('forgeVersion') ?: '47.3.22'}"
-    implementation fg.deobf("local:SlashBladeResharped-1.20.1:${findProperty('slashbladeVersion') ?: '1.1.23'}")
+    // Compile against the oldest supported API; allow runtime-only version swaps for ABI tests.
+    compileOnly fg.deobf("local:SlashBladeResharped-1.20.1:${findProperty('slashbladeVersion') ?: '1.1.23'}")
+    // A separate local coordinate prevents ForgeGradle's shared remap configuration
+    // from resolving both compile and runtime dependencies to the newer version.
+    if (project.hasProperty('slashbladeRuntimeVersion')) {
+        runtimeOnly fg.deobf("local:SlashBladeRuntime-1.20.1:${property('slashbladeRuntimeVersion')}")
+    } else {
+        runtimeOnly fg.deobf("local:SlashBladeResharped-1.20.1:${findProperty('slashbladeVersion') ?: '1.1.23'}")
+    }
     if (project.hasProperty('healthBossTests')) {
         def pack = project.property('healthBossTests')
         fileTree('libs').matching { include "health-${pack}-*-local.jar" }.files.each {

@@ -23,6 +23,7 @@ tools/*
 !tools/prepare_sa_audio.py
 !tools/prepare_sa_motion.py
 !tools/prepare_health_test_mods.py
+!tools/test_slashblade_versions.ps1
 docs/research/
 docs/graymodel*/
 docs/material_v2/
